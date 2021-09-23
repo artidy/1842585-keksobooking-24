@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
-* Студент: [Андрей Печенников](https://up.htmlacademy.ru/javascript/24/user/1842585).
-* Наставник: `Артём Рудов`.
+* Студент: [Андрей Печенников](https://htmlacademy.ru/profile/id1842585).
+* Наставник: [Артём Рудов](https://htmlacademy.ru/profile/artrudov).
 
 ---
 
