@@ -1,4 +1,5 @@
 const AUTHOR_COUNT = 10;
+const LIMIT_NUMBER_FOR_ZERO = 10;
 const BUILDING_TYPES = [
   'palace',
   'flat',
@@ -20,13 +21,17 @@ const DESCRIPTIONS_VALUE = {
   bungalow: 'Шале на воде, с фехтование, уникальные для собак.',
   hotel: 'Отель Altyn Eco Park с общим лаунджем, бесплатной частной парковкой и бесплатным Wi-Fi на всей территории расположен в городе Нур-Султан, примерно в 1,9 км от монумента «Байтерек»',
 };
-const LATITUDE_RANGE = [0, 90, 5];
-const LONGITUDE_RANGE = [0, 180, 5];
-const PRICE_RANGE = [100000, 600000];
-const ROOMS_RANGE = [1, 30];
-const GUESTS_COUNT = [1, 10];
-const CHECKIN_VALUES = ['12:00', '13:00', '14:00'];
-const CHECKOUT_VALUES = ['12:00', '13:00', '14:00'];
+const generateEnum = (min, max, decimals = 0) => ({
+  MIN: min,
+  MAX: max,
+  DECIMALS: decimals,
+});
+const LATITUDE_RANGE = generateEnum(0, 90, 5);
+const LONGITUDE_RANGE = generateEnum(0, 180, 5);
+const PRICE_RANGE = generateEnum(100000, 600000);
+const ROOMS_RANGE = generateEnum(1, 30);
+const GUESTS_COUNT = generateEnum(1, 10);
+const CHECK_VALUES = ['12:00', '13:00', '14:00'];
 const FUTURES = [
   'wifi',
   'dishwasher',
@@ -79,45 +84,50 @@ const generateRandomNumber = (min = 0, max = 0, decimals = 0) => {
   return random.toFixed(decimals);
 };
 
-const getAvatarNumber = (userNumber) => userNumber < 10 ? `0${userNumber}` : userNumber.toString();
+const getAvatarNumber = (userNumber) => userNumber < LIMIT_NUMBER_FOR_ZERO ? `0${userNumber}` : userNumber.toString();
 
 const getRandomValueFromArray = (values) => values[generateRandomNumber(0, values.length - 1)];
 
-const getRandomLocation = () => ({lat: generateRandomNumber(...LATITUDE_RANGE), lng: generateRandomNumber(...LONGITUDE_RANGE)});
+const getRandomLocation = () => ({
+  lat: generateRandomNumber(LATITUDE_RANGE.MIN, LATITUDE_RANGE.MAX, LATITUDE_RANGE.DECIMALS),
+  lng: generateRandomNumber(LONGITUDE_RANGE.MIN, LONGITUDE_RANGE.MAX, LONGITUDE_RANGE.DECIMALS),
+});
 
 const getSomeValuesFromArray = (values) => {
   const valuesCount = generateRandomNumber(1, values.length);
   const result = [];
   let currentIndex = 0;
 
-  while(currentIndex < valuesCount) {
+  while (currentIndex < valuesCount) {
     const newValue = getRandomValueFromArray(values);
     if (!result.includes(newValue)) {
       result.push(newValue);
       currentIndex += 1;
     }
   }
+
   return result;
 };
 
 const createAdvertisement = (userNumber) => {
   const location = getRandomLocation();
-  const buildingType = getRandomValueFromArray(BUILDING_TYPES);
+  const type = getRandomValueFromArray(BUILDING_TYPES);
+
   return {
     author: {
       avatar: `img/avatars/user${getAvatarNumber(userNumber)}.png`,
     },
     offer: {
-      title: TITLES_VALUE[buildingType],
+      title: TITLES_VALUE[type],
       address: `${location.lat}, ${location.lng}`,
-      price: generateRandomNumber(...PRICE_RANGE),
-      type: buildingType,
-      rooms: generateRandomNumber(...ROOMS_RANGE),
-      guests: generateRandomNumber(...GUESTS_COUNT),
-      checkin: getRandomValueFromArray(CHECKIN_VALUES),
-      checkout: getRandomValueFromArray(CHECKOUT_VALUES),
+      price: generateRandomNumber(PRICE_RANGE.MIN, PRICE_RANGE.MAX),
+      type,
+      rooms: generateRandomNumber(ROOMS_RANGE.MIN, ROOMS_RANGE.MAX),
+      guests: generateRandomNumber(GUESTS_COUNT.MIN, GUESTS_COUNT.MAX),
+      checkin: getRandomValueFromArray(CHECK_VALUES),
+      checkout: getRandomValueFromArray(CHECK_VALUES),
       features: getSomeValuesFromArray(FUTURES),
-      description: DESCRIPTIONS_VALUE[buildingType],
+      description: DESCRIPTIONS_VALUE[type],
       photos: getSomeValuesFromArray(PHOTOS_PATH),
     },
     location,
@@ -129,6 +139,7 @@ const generateAdvertisements = () => {
   for (let authorIndex = 1; authorIndex <= AUTHOR_COUNT; authorIndex++) {
     advertisements.push(createAdvertisement(authorIndex));
   }
+
   return advertisements;
 };
 
