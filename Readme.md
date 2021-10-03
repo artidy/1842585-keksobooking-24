@@ -1,6 +1,6 @@
 # Личный проект «Кексобукинг»
 
-* Студент: [Андрей Печенников](https://htmlacademy.ru/profile/id1842585).
+* Студент: [Андрей Печенников](https://htmlacademy.ru/profile/devandy).
 * Наставник: [Артём Рудов](https://htmlacademy.ru/profile/artrudov).
 
 ---
