@@ -22,13 +22,13 @@ const DESCRIPTIONS_VALUE = {
   hotel: 'Отель Altyn Eco Park с общим лаунджем, бесплатной частной парковкой и бесплатным Wi-Fi на всей территории расположен в городе Нур-Султан, примерно в 1,9 км от монумента «Байтерек»',
 };
 const LATITUDE_RANGE = {
-  MIN: 0,
-  MAX: 90,
+  MIN: 35.65000,
+  MAX: 35.70000,
   DECIMALS: 5,
 };
 const LONGITUDE_RANGE = {
-  MIN: 0,
-  MAX: 180,
+  MIN: 139.70000,
+  MAX: 139.80000,
   DECIMALS: 5,
 };
 const PRICE_RANGE = {
