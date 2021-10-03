@@ -21,16 +21,28 @@ const DESCRIPTIONS_VALUE = {
   bungalow: 'Шале на воде, с фехтование, уникальные для собак.',
   hotel: 'Отель Altyn Eco Park с общим лаунджем, бесплатной частной парковкой и бесплатным Wi-Fi на всей территории расположен в городе Нур-Султан, примерно в 1,9 км от монумента «Байтерек»',
 };
-const generateEnum = (min, max, decimals = 0) => ({
-  MIN: min,
-  MAX: max,
-  DECIMALS: decimals,
-});
-const LATITUDE_RANGE = generateEnum(0, 90, 5);
-const LONGITUDE_RANGE = generateEnum(0, 180, 5);
-const PRICE_RANGE = generateEnum(100000, 600000);
-const ROOMS_RANGE = generateEnum(1, 30);
-const GUESTS_COUNT = generateEnum(1, 10);
+const LATITUDE_RANGE = {
+  MIN: 0,
+  MAX: 90,
+  DECIMALS: 5,
+};
+const LONGITUDE_RANGE = {
+  MIN: 0,
+  MAX: 180,
+  DECIMALS: 5,
+};
+const PRICE_RANGE = {
+  MIN: 100000,
+  MAX: 600000,
+};
+const ROOMS_RANGE = {
+  MIN: 1,
+  MAX: 30,
+};
+const GUESTS_COUNT = {
+  MIN: 1,
+  MAX: 10,
+};
 const CHECK_VALUES = ['12:00', '13:00', '14:00'];
 const FUTURES = [
   'wifi',
