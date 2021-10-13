@@ -1,10 +1,19 @@
 import generateAdvertisements from './data.js';
+import {createPopup} from './popup.js';
 
 /**
- * Количество авторов объявлений, на каждого автора генерируется одно объявление
+ * Количество объявлений
  * @constant
  * @type {number}
  * */
-const AUTHOR_COUNT = 10;
+const OFFER_COUNT = 10;
 
-generateAdvertisements(AUTHOR_COUNT);
+const advertisements = generateAdvertisements(OFFER_COUNT);
+
+const canvas = document.querySelector('#map-canvas');
+const popupTemplate = document.querySelector('#card').content;
+
+for (let i = 4; i < 5; i++) {
+  const popup = createPopup(advertisements[i], popupTemplate, '.popup');
+  canvas.append(popup);
+}
