@@ -1,4 +1,4 @@
-import {GUESTS_FORM, ROOMS_FORM} from './constants.js';
+import {IMG_PATH} from './constants.js';
 
 /**
  * Вспомогательная функция для вычисления случайного числа в диапазоне.
@@ -77,15 +77,20 @@ const getSomeValuesFromArray = (values) => {
 };
 
 /**
+ * Ищет дочерний элемент по селектору
+ * @param {Node} parent - родительская нода в которой требуется найти элемент
+ * @param {string} selector - селектор дочернего элемента
+ * @return {HTMLElement} - дочерний элемент
+ */
+const searchNode = (parent, selector) => parent.querySelector(selector);
+
+/**
  * Заполняет текстовое поле на форме
- * @param {Node} element - шаблон модального окна
- * @param {string} selector - селектор модального окна
+ * @param {HTMLElement} container - элемент в котором необходимо заполнить текст
  * @param {string} text - текст, который необходимо добавить
  * @return {undefined} - функция ничего не возвращает
  */
-const fillTextContent = (element, selector, text) => {
-  const container = element.querySelector(selector);
-
+const fillTextContent = (container, text) => {
   if (text) {
     container.textContent = text;
   } else {
@@ -102,29 +107,34 @@ const getPriceDescription = (price) => !price ? '' : `${price} ₽/ночь`;
 
 /**
  * Проверяет значение и возвращает слово в подходящей форме
- * @param {object} forms - две формы слова ONE - единственная и MANY - множественная, TWO - множественное значение от 2 до 4(включительно)
+ * @param {array<string>} forms - три формы слова ONE - единственная, TWO - множественная - значение от 2 до 4(включительно) и MANY - множественная(все остальные)
  * @param {number} value - количество предметов
  * @return {string} - слово в единственной или множественной форме
  */
 const getDescriptionForm = (forms, value) => {
-  const mod10 = value % 10;
-  const mod100 = value % 100;
+  const DEV_10 = 10;
+  const DEV_100 = 100;
+  const RANGE_ONE = 1;
+  const RANGE_TWO = 5;
+  const RANGE_MANY = {
+    MIN: 11,
+    MAX: 20,
+  };
+  const ONE = 0;
+  const TWO = 1;
+  const MANY = 2;
+  const mod10 = value % DEV_10;
+  const mod100 = value % DEV_100;
 
-  if (mod100 >= 11 && mod100 <= 20 || mod10 > 5
-  ) {
-
-    return forms.MANY;
-
-  } else if (mod10 === 1) {
-
-    return forms.ONE;
-
-  } else if (forms.TWO && mod10 > 1 && mod10 < 5) {
-
-    return forms.TWO;
+  if (mod100 >= RANGE_MANY.MIN && mod100 <= RANGE_MANY.MAX || mod10 > RANGE_TWO) {
+    return forms[MANY];
+  } else if (mod10 === RANGE_ONE) {
+    return forms[ONE];
+  } else if (mod10 > RANGE_ONE && mod10 < RANGE_TWO) {
+    return forms[TWO];
   }
 
-  return forms.MANY;
+  return forms[MANY];
 };
 
 /**
@@ -133,7 +143,12 @@ const getDescriptionForm = (forms, value) => {
  * @param {number} guests - количество гостей
  * @return {string} - текст в формате "5 комнат для 6 гостей"
  */
-const getCapacityDescription = (rooms, guests) => !rooms || !guests ? '' : `${rooms} ${getDescriptionForm(ROOMS_FORM, rooms)} для ${guests} ${getDescriptionForm(GUESTS_FORM, guests)}`;
+const getCapacityDescription = (rooms, guests) => {
+  const roomsForm = ['комната', 'комнаты', 'комнат'];
+  const guestsForm = ['гостя', 'гостей', 'гостей'];
+
+  return !rooms || !guests ? '' : `${rooms} ${getDescriptionForm(roomsForm, rooms)} для ${guests} ${getDescriptionForm(guestsForm, guests)}`;
+};
 
 /**
  * Формирует описание заезда и выезда
@@ -145,36 +160,36 @@ const getCheckDescription = (checkIn, checkOut) => !checkIn || !checkOut ? '' : 
 
 /**
  * Удаляет из шаблона лишние удобства
- * @param {Node} element - шаблон формы
- * @param {string} selector - селектор блока со всеми удобствами
+ * @param {HTMLElement} container - блок со всеми удобствами
  * @param {array<string>} features - список доступных удобств для помещения
  * @return {undefined} - функция ничего не возвращает
  */
-const filterFeatures = (element, selector, features) => {
-  const container = element.querySelector(selector);
-  const list = container.querySelectorAll('.popup__feature');
+const filterFeatures = (container, features) => {
+  if (features.length === 0) {
+    container.remove();
+  }
 
-  list.forEach((listElement) => {
-    if (!features.some((feature) => listElement.classList.contains(`popup__feature--${feature}`))) {
-      listElement.remove();
+  const featuresNodes = container.querySelectorAll('.popup__feature');
+
+  featuresNodes.forEach((featureNode) => {
+    if (features.find((feature) => featureNode.classList.contains(`popup__feature--${feature}`))) {
+      return;
     }
+    featureNode.remove();
   });
 
-  if (list.length === 0) {
+  if (featuresNodes.length === 0) {
     container.remove();
   }
 };
 
 /**
  * Добавляет на форму фотографии помещения
- * @param {Node} element - шаблон формы
- * @param {string} selector - селектор блока с фотографиями
+ * @param {HTMLElement} container - блок с фотографиями
  * @param {array<string>} photos - список фотографий помещений
  * @return {undefined} - функция ничего не возвращает
  */
-const fillLinks = (element, selector, photos) => {
-  const container = element.querySelector(selector);
-
+const fillPhotos = (container, photos) => {
   if (photos.length === 0) {
     container.remove();
   }
@@ -183,7 +198,7 @@ const fillLinks = (element, selector, photos) => {
 
   photos.forEach((link) => {
     const photoContainer = template.cloneNode();
-    photoContainer.src = link;
+    photoContainer.src = `${IMG_PATH}${link}`;
     container.append(photoContainer);
   });
 
@@ -192,14 +207,11 @@ const fillLinks = (element, selector, photos) => {
 
 /**
  * Устанавливает аватар автора объявления
- * @param {Node} element - шаблон формы
- * @param {string} selector - селектор блока аватара
+ * @param {HTMLElement} container - блок для аватара пользователя
  * @param {string} link - ссылка на аватар автора
  * @return {undefined} - функция ничего не возвращает
  */
-const fillAvatar = (element, selector, link) => {
-  const container = element.querySelector(selector);
-
+const fillAvatar = (container, link) => {
   if (!link) {
     container.remove();
   } else {
@@ -213,11 +225,12 @@ export {
   getRandomValueFromArray,
   getRandomLocation,
   getSomeValuesFromArray,
+  searchNode,
   fillTextContent,
   getPriceDescription,
   getCapacityDescription,
   getCheckDescription,
   filterFeatures,
-  fillLinks,
+  fillPhotos,
   fillAvatar
 };

@@ -5,8 +5,8 @@ import {
   getCapacityDescription,
   getCheckDescription,
   filterFeatures,
-  fillLinks,
-  fillAvatar
+  fillPhotos,
+  fillAvatar, searchNode
 } from './utils.js';
 
 /**
@@ -19,17 +19,18 @@ import {
 const createPopup = (advertisement, template, selector) => {
   const popupTemplate = template.querySelector(selector);
   const popup = popupTemplate.cloneNode(true);
+  const {offer, author} = advertisement;
 
-  fillTextContent(popup, '.popup__title', advertisement.offer.title);
-  fillTextContent(popup, '.popup__text--address', advertisement.offer.address);
-  fillTextContent(popup, '.popup__text--price', getPriceDescription(advertisement.offer.price));
-  fillTextContent(popup, '.popup__type', BUILDING_TYPES[advertisement.offer.type]);
-  fillTextContent(popup, '.popup__text--capacity', getCapacityDescription(advertisement.offer.rooms, advertisement.offer.guests));
-  fillTextContent(popup, '.popup__text--time', getCheckDescription(advertisement.offer.checkin, advertisement.offer.checkout));
-  filterFeatures(popup, '.popup__features', advertisement.offer.features);
-  fillTextContent(popup, '.popup__description', advertisement.offer.description);
-  fillLinks(popup, '.popup__photos', advertisement.offer.photos);
-  fillAvatar(popup, '.popup__avatar', advertisement.author.avatar);
+  fillTextContent(searchNode(popup, '.popup__title'), offer.title);
+  fillTextContent(searchNode(popup, '.popup__text--address'), offer.address);
+  fillTextContent(searchNode(popup, '.popup__text--price'), getPriceDescription(offer.price));
+  fillTextContent(searchNode(popup, '.popup__type'), BUILDING_TYPES[offer.type]);
+  fillTextContent(searchNode(popup, '.popup__text--capacity'), getCapacityDescription(offer.rooms, offer.guests));
+  fillTextContent(searchNode(popup, '.popup__text--time'), getCheckDescription(offer.checkin, offer.checkout));
+  filterFeatures(searchNode(popup, '.popup__features'), offer.features);
+  fillTextContent(searchNode(popup, '.popup__description'), offer.description);
+  fillPhotos(searchNode(popup, '.popup__photos'), offer.photos);
+  fillAvatar(searchNode(popup, '.popup__avatar'), author.avatar);
 
   return popup;
 };

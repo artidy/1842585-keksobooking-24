@@ -113,34 +113,22 @@ const FUTURES = [
 ];
 
 /**
+ * Путь к директории изображений
+ * @constant
+ * @type {string}
+ * */
+const IMG_PATH = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/';
+
+/**
  * Фотографии местоположения помещения
  * @constant
  * @type {array<string>}
  * */
 const PHOTOS_PATH = [
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
+  'duonguyen-8LrGtIxxa4w.jpg',
+  'brandon-hoogenboom-SNxQGWxZQi0.jpg',
+  'claire-rendall-b6kAwr1i0Iw.jpg',
 ];
-
-/**
- * Множественная и единственная формы для комнаты
- * @enum {string}
- * */
-const ROOMS_FORM = {
-  ONE: 'комната',
-  TWO: 'комнаты',
-  MANY: 'комнат',
-};
-
-/**
- * Множественная и единственная формы для гостей
- * @enum {string}
- * */
-const GUESTS_FORM = {
-  ONE: 'гостя',
-  MANY: 'гостей',
-};
 
 export {
   LIMIT_NUMBER_FOR_ZERO,
@@ -154,7 +142,6 @@ export {
   GUESTS_COUNT,
   CHECK_VALUES,
   FUTURES,
-  PHOTOS_PATH,
-  ROOMS_FORM,
-  GUESTS_FORM
+  IMG_PATH,
+  PHOTOS_PATH
 };
