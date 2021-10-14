@@ -6,11 +6,11 @@ import {
   getSomeValuesFromArray
 } from './utils.js';
 import {
-  BUILDING_TYPES, CHECK_VALUES, DESCRIPTIONS_VALUE, FUTURES, GUESTS_COUNT,
-  LATITUDE_RANGE,
+  BUILDING_TYPES, CHECK_VALUES, DESCRIPTIONS_VALUE, FUTURES, GuestCount,
+  LatitudeRange,
   LIMIT_NUMBER_FOR_ZERO,
-  LONGITUDE_RANGE, PHOTOS_PATH,
-  PRICE_RANGE, ROOMS_RANGE,
+  LongitudeRange, PHOTOS_PATH,
+  PriceRange, RoomsRange,
   TITLES_VALUE
 } from './constants.js';
 
@@ -21,7 +21,7 @@ import {
  * @return {object} - объект объявления со случайными данными.
  */
 const createOffer = (value, avatarIndex) => {
-  const location = getRandomLocation(LATITUDE_RANGE, LONGITUDE_RANGE);
+  const location = getRandomLocation(LatitudeRange, LongitudeRange);
   const type = getRandomValueFromArray(Object.keys(BUILDING_TYPES));
   return {
     author: {
@@ -30,10 +30,10 @@ const createOffer = (value, avatarIndex) => {
     offer: {
       title: TITLES_VALUE[type],
       address: `${location.lat}, ${location.lng}`,
-      price: generateRandomNumber(PRICE_RANGE.MIN, PRICE_RANGE.MAX),
+      price: generateRandomNumber(PriceRange.MIN, PriceRange.MAX),
       type,
-      rooms: generateRandomNumber(ROOMS_RANGE.MIN, ROOMS_RANGE.MAX),
-      guests: generateRandomNumber(GUESTS_COUNT.MIN, GUESTS_COUNT.MAX),
+      rooms: generateRandomNumber(RoomsRange.MIN, RoomsRange.MAX),
+      guests: generateRandomNumber(GuestCount.MIN, GuestCount.MAX),
       checkin: getRandomValueFromArray(CHECK_VALUES),
       checkout: getRandomValueFromArray(CHECK_VALUES),
       features: getSomeValuesFromArray(FUTURES),

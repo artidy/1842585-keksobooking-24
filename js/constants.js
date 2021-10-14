@@ -48,7 +48,7 @@ const DESCRIPTIONS_VALUE = {
  * Диапазон широты, для генерации случайного местоположения
  * @enum {number}
  * */
-const LATITUDE_RANGE = {
+const LatitudeRange = {
   MIN: 35.65000,
   MAX: 35.70000,
   DECIMALS: 5,
@@ -58,7 +58,7 @@ const LATITUDE_RANGE = {
  * Диапазон долготы, для генерации случайного местоположения
  * @enum {number}
  * */
-const LONGITUDE_RANGE = {
+const LongitudeRange = {
   MIN: 139.70000,
   MAX: 139.80000,
   DECIMALS: 5,
@@ -68,7 +68,7 @@ const LONGITUDE_RANGE = {
  * Диапазон цен, для генерации случайного значения
  * @enum {number}
  * */
-const PRICE_RANGE = {
+const PriceRange = {
   MIN: 100000,
   MAX: 600000,
 };
@@ -77,7 +77,7 @@ const PRICE_RANGE = {
  * Диапазон количества комнат, для генерации случайного значения
  * @enum {number}
  * */
-const ROOMS_RANGE = {
+const RoomsRange = {
   MIN: 1,
   MAX: 30,
 };
@@ -86,7 +86,7 @@ const ROOMS_RANGE = {
  * Диапазон количества гостей, для генерации случайного значения
  * @enum {number}
  * */
-const GUESTS_COUNT = {
+const GuestCount = {
   MIN: 1,
   MAX: 10,
 };
@@ -130,18 +130,100 @@ const PHOTOS_PATH = [
   'claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
+/**
+ * Делитель 10 для получения остатка от числа
+ * @constant
+ * @type {number}
+ * */
+const DEV_10 = 10;
+
+/**
+ * Делитель 100 для получения остатка от числа
+ * @constant
+ * @type {number}
+ * */
+const DEV_100 = 100;
+
+/**
+ * Ограничение для определения единственного числа
+ * @constant
+ * @type {number}
+ * */
+const RANGE_ONE = 1;
+
+/**
+ * Ограничение для определения множественного числа
+ * @constant
+ * @type {number}
+ * */
+const RANGE_TWO = 5;
+
+/**
+ * Ограничение для определения множественного числа
+ * @enum {number}
+ * */
+const RangeMany = {
+  MIN: 11,
+  MAX: 20,
+};
+
+/**
+ * Индекс в массиве для единственного числа
+ * @constant
+ * @type {number}
+ * */
+const ONE = 0;
+
+/**
+ * Индекс в массиве для множественного числа
+ * @constant
+ * @type {number}
+ * */
+const TWO = 1;
+
+/**
+ * Индекс в массиве для множественного числа
+ * @constant
+ * @type {number}
+ * */
+const MANY = 2;
+
+/**
+ * Три варианта для выбора множественного и единственно числа по слову "комната"
+ * @constant
+ * @type {array<string>>}
+ * */
+const ROOMS_FORM = ['комната', 'комнаты', 'комнат'];
+
+/**
+ * Три варианта для выбора множественного и единственно числа по слову "гость"
+ * @constant
+ * @type {array<string>>}
+ * */
+const GUESTS_FORM = ['гостя', 'гостей', 'гостей'];
+
 export {
   LIMIT_NUMBER_FOR_ZERO,
   BUILDING_TYPES,
   TITLES_VALUE,
   DESCRIPTIONS_VALUE,
-  LATITUDE_RANGE,
-  LONGITUDE_RANGE,
-  PRICE_RANGE,
-  ROOMS_RANGE,
-  GUESTS_COUNT,
+  LatitudeRange,
+  LongitudeRange,
+  PriceRange,
+  RoomsRange,
+  GuestCount,
   CHECK_VALUES,
   FUTURES,
   PUBLIC_PATH,
-  PHOTOS_PATH
+  PHOTOS_PATH,
+  DEV_10,
+  DEV_100,
+  RANGE_ONE,
+  RANGE_TWO,
+  RangeMany,
+  ONE,
+  TWO,
+  MANY,
+  ROOMS_FORM,
+  GUESTS_FORM
 };
