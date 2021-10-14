@@ -117,7 +117,7 @@ const FUTURES = [
  * @constant
  * @type {string}
  * */
-const IMG_PATH = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/';
+const PUBLIC_PATH = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/';
 
 /**
  * Фотографии местоположения помещения
@@ -142,6 +142,6 @@ export {
   GUESTS_COUNT,
   CHECK_VALUES,
   FUTURES,
-  IMG_PATH,
+  PUBLIC_PATH,
   PHOTOS_PATH
 };

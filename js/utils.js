@@ -1,4 +1,4 @@
-import {IMG_PATH} from './constants.js';
+import {PUBLIC_PATH} from './constants.js';
 
 /**
  * Вспомогательная функция для вычисления случайного числа в диапазоне.
@@ -198,7 +198,7 @@ const fillPhotos = (container, photos) => {
 
   photos.forEach((link) => {
     const photoContainer = template.cloneNode();
-    photoContainer.src = `${IMG_PATH}${link}`;
+    photoContainer.src = `${PUBLIC_PATH}${link}`;
     container.append(photoContainer);
   });
 
