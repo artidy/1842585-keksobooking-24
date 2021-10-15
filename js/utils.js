@@ -1,4 +1,15 @@
-import {PUBLIC_PATH} from './constants.js';
+import {
+  DEV_10,
+  DEV_100,
+  MANY,
+  ONE,
+  PUBLIC_PATH,
+  RangeMany,
+  RANGE_ONE,
+  RANGE_TWO,
+  TWO,
+  ROOMS_FORM, GUESTS_FORM
+} from './constants.js';
 
 /**
  * Вспомогательная функция для вычисления случайного числа в диапазоне.
@@ -103,7 +114,7 @@ const fillTextContent = (container, text) => {
  * @param {number} price - цена аренды
  * @return {string} - описание цены в формате "50000 ₽/ночь"
  */
-const getPriceDescription = (price) => !price ? '' : `${price} ₽/ночь`;
+const getPriceDescription = (price) => price ? `${price} ₽/ночь` : '';
 
 /**
  * Проверяет значение и возвращает слово в подходящей форме
@@ -112,21 +123,10 @@ const getPriceDescription = (price) => !price ? '' : `${price} ₽/ночь`;
  * @return {string} - слово в единственной или множественной форме
  */
 const getDescriptionForm = (forms, value) => {
-  const DEV_10 = 10;
-  const DEV_100 = 100;
-  const RANGE_ONE = 1;
-  const RANGE_TWO = 5;
-  const RANGE_MANY = {
-    MIN: 11,
-    MAX: 20,
-  };
-  const ONE = 0;
-  const TWO = 1;
-  const MANY = 2;
   const mod10 = value % DEV_10;
   const mod100 = value % DEV_100;
 
-  if (mod100 >= RANGE_MANY.MIN && mod100 <= RANGE_MANY.MAX || mod10 > RANGE_TWO) {
+  if (mod100 >= RangeMany.MIN && mod100 <= RangeMany.MAX || mod10 > RANGE_TWO) {
     return forms[MANY];
   } else if (mod10 === RANGE_ONE) {
     return forms[ONE];
@@ -143,12 +143,7 @@ const getDescriptionForm = (forms, value) => {
  * @param {number} guests - количество гостей
  * @return {string} - текст в формате "5 комнат для 6 гостей"
  */
-const getCapacityDescription = (rooms, guests) => {
-  const roomsForm = ['комната', 'комнаты', 'комнат'];
-  const guestsForm = ['гостя', 'гостей', 'гостей'];
-
-  return !rooms || !guests ? '' : `${rooms} ${getDescriptionForm(roomsForm, rooms)} для ${guests} ${getDescriptionForm(guestsForm, guests)}`;
-};
+const getCapacityDescription = (rooms, guests) => rooms && guests ? `${rooms} ${getDescriptionForm(ROOMS_FORM, rooms)} для ${guests} ${getDescriptionForm(GUESTS_FORM, guests)}` : '';
 
 /**
  * Формирует описание заезда и выезда
@@ -156,7 +151,7 @@ const getCapacityDescription = (rooms, guests) => {
  * @param {string} checkOut - время выезда
  * @return {string} - текст в формате "Заезд после 12:00, выезд до 13:00"
  */
-const getCheckDescription = (checkIn, checkOut) => !checkIn || !checkOut ? '' : `Заезд после ${checkIn}, выезд до ${checkOut}`;
+const getCheckDescription = (checkIn, checkOut) => checkIn && checkOut ? `Заезд после ${checkIn}, выезд до ${checkOut}`: '';
 
 /**
  * Удаляет из шаблона лишние удобства
