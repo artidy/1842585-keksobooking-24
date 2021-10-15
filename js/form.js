@@ -4,7 +4,14 @@
  * @param {array<string>} selectors - селекторы для поиска элементов
  * @return {array<HTMLElement>} - массив подчиненных элементов
  */
-const findChildren = (form, selectors) => selectors.map((selector) => form.querySelectorAll(selector));
+const findChildren = (form, selectors) => {
+  let result = [];
+  selectors.forEach((selector) => {
+    result = [...result, ...form.querySelectorAll(selector)];
+  });
+
+  return result;
+};
 
 /**
  * Активирует форму и все подчиненные элементы
@@ -15,8 +22,8 @@ const findChildren = (form, selectors) => selectors.map((selector) => form.query
  */
 const activateForm = (form, disableClass, formElements) => {
   form.classList.remove(disableClass);
-  formElements.forEach((fieldset) => {
-    fieldset.disabled = false;
+  formElements.forEach((formElement) => {
+    formElement.removeAttribute('disabled');
   });
 };
 
@@ -29,8 +36,8 @@ const activateForm = (form, disableClass, formElements) => {
  */
 const deactivateForm = (form, disableClass, formElements) => {
   form.classList.add(disableClass);
-  formElements.forEach((fieldset) => {
-    fieldset.disabled = true;
+  formElements.forEach((formElement) => {
+    formElement.setAttribute('disabled', 'disabled');
   });
 };
 

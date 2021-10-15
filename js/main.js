@@ -37,10 +37,10 @@ canvas.append(popup);
 
 const addForm = document.querySelector('.ad-form');
 const addElements = findChildren(addForm, CONTROL_SELECTORS);
-activateForm(addForm, DISABLE_CLASS, addElements);
 deactivateForm(addForm, DISABLE_CLASS, addElements);
+activateForm(addForm, DISABLE_CLASS, addElements);
 
 const filterForm = document.querySelector('.map__filters');
 const filterElements = findChildren(filterForm, CONTROL_SELECTORS);
-activateForm(filterForm, DISABLE_CLASS, filterElements);
 deactivateForm(filterForm, DISABLE_CLASS, filterElements);
+activateForm(filterForm, DISABLE_CLASS, filterElements);

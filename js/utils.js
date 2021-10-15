@@ -114,7 +114,7 @@ const fillTextContent = (container, text) => {
  * @param {number} price - цена аренды
  * @return {string} - описание цены в формате "50000 ₽/ночь"
  */
-const getPriceDescription = (price) => !price ? '' : `${price} ₽/ночь`;
+const getPriceDescription = (price) => price ? `${price} ₽/ночь` : '';
 
 /**
  * Проверяет значение и возвращает слово в подходящей форме
@@ -143,7 +143,7 @@ const getDescriptionForm = (forms, value) => {
  * @param {number} guests - количество гостей
  * @return {string} - текст в формате "5 комнат для 6 гостей"
  */
-const getCapacityDescription = (rooms, guests) => !rooms || !guests ? '' : `${rooms} ${getDescriptionForm(ROOMS_FORM, rooms)} для ${guests} ${getDescriptionForm(GUESTS_FORM, guests)}`;
+const getCapacityDescription = (rooms, guests) => rooms && guests ? `${rooms} ${getDescriptionForm(ROOMS_FORM, rooms)} для ${guests} ${getDescriptionForm(GUESTS_FORM, guests)}` : '';
 
 /**
  * Формирует описание заезда и выезда
@@ -151,7 +151,7 @@ const getCapacityDescription = (rooms, guests) => !rooms || !guests ? '' : `${ro
  * @param {string} checkOut - время выезда
  * @return {string} - текст в формате "Заезд после 12:00, выезд до 13:00"
  */
-const getCheckDescription = (checkIn, checkOut) => !checkIn || !checkOut ? '' : `Заезд после ${checkIn}, выезд до ${checkOut}`;
+const getCheckDescription = (checkIn, checkOut) => checkIn && checkOut ? `Заезд после ${checkIn}, выезд до ${checkOut}`: '';
 
 /**
  * Удаляет из шаблона лишние удобства
