@@ -22,6 +22,18 @@ const TYPE_MIN_PRICE = {
   house: 5000,
   palace: 10000,
 };
+/**
+ * Имя класса для отключения формы
+ * @constant
+ * @type {number}
+ * */
+const MIN_GUEST_LIMIT = 0;
+/**
+ * Имя класса для отключения формы
+ * @constant
+ * @type {number}
+ * */
+const MAX_ROOMS_LIMIT = 100;
 
 const formFilter = document.querySelector('.map__filters');
 const formAdd = document.querySelector('.ad-form');
@@ -39,13 +51,21 @@ const guests = document.querySelector('#capacity');
  * @return {array<HTMLElement>} - массив подчиненных элементов
  */
 const findChildren = (form) => CONTROL_SELECTORS.map((selector) => Array.from(form.querySelectorAll(selector))).flat();
-
+/**
+ * Изменяет атрибуты поля цены аренды
+ * @param {string} current - тип помещения
+ * @return {undefined} - Функция ничего не возвращает
+ */
 const changeType = (current) => {
   const minPrice = TYPE_MIN_PRICE[current];
   price.setAttribute('placeholder', minPrice);
   price.setAttribute('min', minPrice);
 };
-
+/**
+ * Проверяет валидность введенных данных в поле input
+ * @param {HTMLElement} inputElement - тип помещения
+ * @return {undefined} - Функция ничего не возвращает
+ */
 const checkInputValidity = (inputElement) => {
   const validity = inputElement.validity;
   if (validity.valueMissing) {
@@ -60,19 +80,21 @@ const checkInputValidity = (inputElement) => {
 
   inputElement.reportValidity();
 };
-
+/**
+ * Проверяет валидность выбранных данных для поля гость
+ * @return {undefined} - Функция ничего не возвращает
+ */
 const changeGuests = () => {
   const roomsCount = +rooms.value;
   const count = +guests.value;
-  if (roomsCount === 100 && count !== 0 ||
-    roomsCount !== 100 && (count === 0 || count > roomsCount)) {
+  if (roomsCount === MAX_ROOMS_LIMIT && count !== MIN_GUEST_LIMIT ||
+    roomsCount !== MAX_ROOMS_LIMIT && (count === MIN_GUEST_LIMIT || count > roomsCount)) {
     guests.setCustomValidity('Неправильно выбрано возможное количество гостей');
   } else {
     guests.setCustomValidity('');
   }
   guests.reportValidity();
 };
-
 /**
  * Активирует форму и все подчиненные элементы
  * @param {HTMLElement} form - форма родитель
@@ -85,7 +107,6 @@ const activateForm = (form, formElements) => {
     formElement.removeAttribute('disabled');
   });
 };
-
 /**
  * Отключает форму и все подчиненные элементы
  * @param {HTMLElement} form - форма родитель
@@ -139,5 +160,5 @@ deactivateForm(formAdd, formAddChildren);
 activateForm(formFilter, formFilterChildren);
 activateForm(formAdd, formAddChildren);
 changeTime(timeOut, timeIn.value);
-changeGuests(rooms.value);
+changeGuests();
 changeType(type.value);
