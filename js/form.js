@@ -35,8 +35,8 @@ const MIN_GUEST_LIMIT = 0;
  * */
 const MAX_ROOMS_LIMIT = 100;
 
-const formFilter = document.querySelector('.map__filters');
-const formAdd = document.querySelector('.ad-form');
+export const formFilter = document.querySelector('.map__filters');
+export const formAdd = document.querySelector('.ad-form');
 const title = formAdd.querySelector('#title');
 const timeIn = formAdd.querySelector('#timein');
 const timeOut = formAdd.querySelector('#timeout');
@@ -101,7 +101,7 @@ const changeGuests = () => {
  * @param {array<HTMLElement>} formElements - массив подчиненных элементов
  * @return {undefined} - функция ничего не возвращает
  */
-const activateForm = (form, formElements) => {
+export const activateForm = (form, formElements) => {
   form.classList.remove(DISABLE_CLASS);
   formElements.forEach((formElement) => {
     formElement.removeAttribute('disabled');
@@ -113,7 +113,7 @@ const activateForm = (form, formElements) => {
  * @param {array<HTMLElement>} formElements - массив подчиненных элементов
  * @return {undefined} - функция ничего не возвращает
  */
-const deactivateForm = (form, formElements) => {
+export const deactivateForm = (form, formElements) => {
   form.classList.add(DISABLE_CLASS);
   formElements.forEach((formElement) => {
     formElement.setAttribute('disabled', 'disabled');
@@ -152,13 +152,9 @@ timeOut.addEventListener('change', onTimeInChange);
 rooms.addEventListener('change', onGuestsChange);
 guests.addEventListener('change', onGuestsChange);
 
-const formFilterChildren = findChildren(formFilter);
-const formAddChildren = findChildren(formAdd);
+export const formFilterChildren = findChildren(formFilter);
+export const formAddChildren = findChildren(formAdd);
 
-deactivateForm(formFilter, formFilterChildren);
-deactivateForm(formAdd, formAddChildren);
-activateForm(formFilter, formFilterChildren);
-activateForm(formAdd, formAddChildren);
 changeTime(timeOut, timeIn.value);
 changeGuests();
 changeType(type.value);
