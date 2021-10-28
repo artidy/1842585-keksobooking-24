@@ -190,8 +190,8 @@ const initForm = (postData, getCurrentLocation) => {
 
   const onAddFormSubmit = (evt) => {
     evt.preventDefault();
-    deactivateForms();
     const formData = new FormData(formAdd);
+    deactivateForms();
     postData(onDataSent, formData, activateForms);
   };
 
