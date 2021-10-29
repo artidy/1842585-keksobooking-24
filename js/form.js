@@ -61,6 +61,7 @@ const changeType = (current) => {
   price.setAttribute('placeholder', minPrice);
   price.setAttribute('min', minPrice);
 };
+
 /**
  * Проверяет валидность введенных данных в поле input
  * @param {HTMLElement} inputElement - тип помещения
@@ -80,6 +81,7 @@ const checkInputValidity = (inputElement) => {
 
   inputElement.reportValidity();
 };
+
 /**
  * Проверяет валидность выбранных данных для поля гость
  * @return {undefined} - Функция ничего не возвращает
@@ -95,6 +97,7 @@ const changeGuests = () => {
   }
   guests.reportValidity();
 };
+
 /**
  * Активирует форму и все подчиненные элементы
  * @param {HTMLElement} form - форма родитель
@@ -107,6 +110,7 @@ const activateForm = (form, formElements) => {
     formElement.removeAttribute('disabled');
   });
 };
+
 /**
  * Отключает форму и все подчиненные элементы
  * @param {HTMLElement} form - форма родитель
@@ -119,6 +123,7 @@ const deactivateForm = (form, formElements) => {
     formElement.setAttribute('disabled', 'disabled');
   });
 };
+
 /**
  * Отключает все формы и все подчиненные элементы
  * @return {undefined} - функция ничего не возвращает
@@ -127,6 +132,7 @@ const deactivateForms = () => {
   deactivateForm(formFilter, formFilterChildren);
   deactivateForm(formAdd, formAddChildren);
 };
+
 /**
  * Активирует все формы и все подчиненные элементы
  * @return {undefined} - функция ничего не возвращает
@@ -135,6 +141,7 @@ const activateForms = () => {
   activateForm(formFilter, formFilterChildren);
   activateForm(formAdd, formAddChildren);
 };
+
 /**
  * Сбрасывает данные на всех формах
  * @return {undefined} - функция ничего не возвращает
@@ -143,6 +150,7 @@ const resetForms = () => {
   formFilter.reset();
   formAdd.reset();
 };
+
 /**
  * Переключает время заезда или выезда
  * @param {HTMLElement} checkTimeElement - блок выбора времени заезда или выезда
@@ -152,6 +160,7 @@ const resetForms = () => {
 const changeTime = (checkTimeElement, value) => {
   checkTimeElement.value = value;
 };
+
 /**
  * Устанавливает значение координат точки на карте
  * @param {object} buildingLocation - координаты выбранные на карте

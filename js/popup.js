@@ -65,13 +65,13 @@ const MANY = 2;
 /**
  * Три варианта для выбора множественного и единственно числа по слову "комната"
  * @constant
- * @type {array<string>>}
+ * @type {array<string>}
  * */
 const ROOMS_FORM = ['комната', 'комнаты', 'комнат'];
 /**
  * Три варианта для выбора множественного и единственно числа по слову "гость"
  * @constant
- * @type {array<string>>}
+ * @type {array<string>}
  * */
 const GUESTS_FORM = ['гостя', 'гостей', 'гостей'];
 
@@ -88,12 +88,14 @@ const fillTextContent = (container, text) => {
     container.remove();
   }
 };
+
 /**
  * Формирует описание цены в рублях
  * @param {number} price - цена аренды
  * @return {string} - описание цены в формате "50000 ₽/ночь"
  */
 const getPriceDescription = (price) => price ? `${price} ₽/ночь` : '';
+
 /**
  * Проверяет значение и возвращает слово в подходящей форме
  * @param {array<string>} forms - три формы слова ONE - единственная, TWO - множественная - значение от 2 до 4(включительно) и MANY - множественная(все остальные)
@@ -114,6 +116,7 @@ const getDescriptionForm = (forms, value) => {
 
   return forms[MANY];
 };
+
 /**
  * Формирует описание вместительности помещения
  * @param {number} rooms - количество комнат в помещении
@@ -121,6 +124,7 @@ const getDescriptionForm = (forms, value) => {
  * @return {string} - текст в формате "5 комнат для 6 гостей"
  */
 const getCapacityDescription = (rooms, guests) => rooms && guests ? `${rooms} ${getDescriptionForm(ROOMS_FORM, rooms)} для ${guests} ${getDescriptionForm(GUESTS_FORM, guests)}` : '';
+
 /**
  * Формирует описание заезда и выезда
  * @param {string} checkIn - время заезда
@@ -128,6 +132,7 @@ const getCapacityDescription = (rooms, guests) => rooms && guests ? `${rooms} ${
  * @return {string} - текст в формате "Заезд после 12:00, выезд до 13:00"
  */
 const getCheckDescription = (checkIn, checkOut) => checkIn && checkOut ? `Заезд после ${checkIn}, выезд до ${checkOut}`: '';
+
 /**
  * Удаляет из шаблона лишние удобства
  * @param {HTMLElement} container - блок со всеми удобствами
@@ -146,6 +151,7 @@ const filterFeatures = (container, features) => {
     if (features.find((feature) => featureNode.classList.contains(`popup__feature--${feature}`))) {
       return;
     }
+
     featureNode.remove();
   });
 
@@ -153,6 +159,7 @@ const filterFeatures = (container, features) => {
     container.remove();
   }
 };
+
 /**
  * Добавляет на форму фотографии помещения
  * @param {HTMLElement} container - блок с фотографиями
@@ -175,6 +182,7 @@ const fillPhotos = (container, photos) => {
 
   template.remove();
 };
+
 /**
  * Устанавливает аватар автора объявления
  * @param {HTMLElement} container - блок для аватара пользователя
@@ -188,6 +196,7 @@ const fillAvatar = (container, link) => {
     container.src = link;
   }
 };
+
 /**
  * Создает и возвращает модальное окно с переданными значениями
  * @param {object} advertisement - предложение об аренде

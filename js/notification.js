@@ -1,6 +1,7 @@
 import {searchNode} from './utils.js';
 
-const body = searchNode(document, 'body');
+const NOTIFICATION_TIME = 5000;
+
 const successTemplate = searchNode(searchNode(document,'#success').content, '.success');
 const errorTemplate = searchNode(searchNode(document,'#error').content, '.error');
 
@@ -10,11 +11,11 @@ const addMessage = (template, messageClass, message) => {
 
   content.textContent = message;
 
-  body.append(block);
+  document.body.append(block);
 
   setTimeout(() => {
     block.remove();
-  }, 5000);
+  }, NOTIFICATION_TIME);
 };
 
 const success = (message) => {

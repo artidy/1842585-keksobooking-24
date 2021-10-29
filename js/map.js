@@ -30,18 +30,16 @@ const map = L.map(MapSettings.ID);
 mainMarker.addTo(map);
 tileLayer.addTo(map);
 
-const addOffersToMap = (offers) => {
-  offers.forEach((offer) => {
+const addOffersToMap = (offers) =>
+  offers.forEach((offer) =>
     L.marker(offer.location, {icon: offerIcon})
       .addTo(map)
-      .bindPopup(createPopup(offer, popupTemplate, MapSettings.POPUP_CLASS));
-  });
-};
+      .bindPopup(createPopup(offer, popupTemplate, MapSettings.POPUP_CLASS)),
+  );
 
 const getCurrentLocation = () => mainMarker.getLatLng();
 
-const initMap = (activateForms, setLocation) => {
-  const onMapLoad = () => activateForms();
+const initMap = (onMapLoad, setLocation) => {
   const onMarkerMoveEnd = () => setLocation(getCurrentLocation());
 
   map.on('load', onMapLoad);
