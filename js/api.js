@@ -3,14 +3,16 @@ import {error} from './notification.js';
 const SERVER_URL = 'https://24.javascript.pages.academy/keksobooking';
 const DATA_PATH = 'data';
 
-const getData = (onSuccess) => {
+const getData = (onStartLoad, onSuccess, onUpdateMap, onResetMap) => () => {
+  onStartLoad();
   fetch(`${SERVER_URL}/${DATA_PATH}`)
     .then((response) => response.json())
-    .then((data) => onSuccess(data))
+    .then((data) => onSuccess(data, onUpdateMap))
+    .then(() => onResetMap())
     .catch((err) => error(err.message));
 };
 
-const postData = (onSuccess, body, onFinally) => {
+const postData = (onSuccess, body, onUpdateData) => {
   fetch(SERVER_URL, {
     method: 'POST',
     body,
@@ -23,8 +25,8 @@ const postData = (onSuccess, body, onFinally) => {
       throw new Error(`Не удалось отправить данные, статус ошибки: ${response.status}, код ошибки: ${response.statusText}`);
     })
     .then((data) => onSuccess(data))
-    .catch((err) => error(err.message))
-    .finally(() => onFinally());
+    .then(() => onUpdateData())
+    .catch((err) => error(err.message));
 };
 
 export {getData, postData};
