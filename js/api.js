@@ -8,8 +8,8 @@ const getData = (onStartLoad, onSuccess, onUpdateMap, onResetMap) => () => {
   fetch(`${SERVER_URL}/${DATA_PATH}`)
     .then((response) => response.json())
     .then((data) => onSuccess(data, onUpdateMap))
-    .then(() => onResetMap())
-    .catch((err) => error(err.message));
+    .then(onResetMap)
+    .catch(({message}) => error(message));
 };
 
 const postData = (onSuccess, body, onUpdateData) => {
@@ -26,7 +26,7 @@ const postData = (onSuccess, body, onUpdateData) => {
     })
     .then((data) => onSuccess(data))
     .then(() => onUpdateData())
-    .catch((err) => error(err.message));
+    .catch(({message}) => error(message));
 };
 
 export {getData, postData};

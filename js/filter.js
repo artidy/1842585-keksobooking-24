@@ -36,24 +36,20 @@ const filterRooms = ({rooms}) => rooms >= +housingRooms.value || housingRooms.va
 
 const filterGuests = ({guests}) => guests >= +housingGuests.value || housingGuests.value === 'any';
 
-const getWeightFeature = (features) => {
+const getWeightFeatures = (features) => {
   let weight = 0;
 
   if (!features) {
     return weight;
   }
 
-  const featureNodes = featureContainer.querySelectorAll('[type="checkbox"]:checked');
-  featureNodes.forEach((featureNode) => {
-    if (features.includes(featureNode.value)) {
-      weight += FEATURE_WEIGHT;
-    }
-  });
+  const nodes = Array.from(featureContainer.querySelectorAll('[type="checkbox"]:checked'));
+  weight = nodes.reduce((value, node) => (features.includes(node.value) ? value + FEATURE_WEIGHT : value), weight);
 
   return weight;
 };
 
-const sortFeature = ({features: firstFeatures}, {features: secondFeatures}) => getWeightFeature(secondFeatures) - getWeightFeature(firstFeatures);
+const sortFeature = ({features: firstFeatures}, {features: secondFeatures}) => getWeightFeatures(secondFeatures) - getWeightFeatures(firstFeatures);
 
 const updateFilters = (offers, updateMap) => {
   const filteredOffers = offers
@@ -71,7 +67,7 @@ const onFilterOffers = (offers, updateMap) => {
   const onUpdateFilters = () => onDebounce(offers, updateMap);
   const onUpdateFeature = ({target}) => {
     if (target && target.classList.contains('map__feature')) {
-      onDebounce(offers, updateMap);
+      onUpdateFilters()();
     }
   };
 
