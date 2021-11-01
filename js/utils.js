@@ -4,6 +4,7 @@
  * @type {array<string>}
  * */
 const CONTROL_SELECTORS = ['select', 'fieldset'];
+const TIMEOUT_DEBOUNCE = 500;
 
 /**
  * Ищет дочерний элемент по селектору
@@ -24,7 +25,7 @@ const findChildren = (form) => CONTROL_SELECTORS.map((selector) => Array.from(fo
  * Функция взята из интернета и доработана
  * Источник - https://www.freecodecamp.org/news/javascript-debounce-example
  */
-function debounce (callback, timeoutDelay = 500) {
+function debounce (callback, timeoutDelay = TIMEOUT_DEBOUNCE) {
   // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
   // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
   let timeoutId;
