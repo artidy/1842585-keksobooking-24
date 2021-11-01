@@ -50,6 +50,7 @@ const type = searchNode(document, '#type');
 const rooms = searchNode(document, '#room_number');
 const guests = searchNode(document, '#capacity');
 const locationField = searchNode(formAdd, '#address');
+const resetButton = searchNode(formAdd, '[type="reset"]');
 
 /**
  * Изменяет атрибуты поля цены аренды
@@ -143,15 +144,6 @@ const activateForms = () => {
 };
 
 /**
- * Сбрасывает данные на всех формах
- * @return {undefined} - функция ничего не возвращает
- */
-const resetForms = () => {
-  formFilter.reset();
-  formAdd.reset();
-};
-
-/**
  * Переключает время заезда или выезда
  * @param {HTMLElement} checkTimeElement - блок выбора времени заезда или выезда
  * @param {string} value - значение времени
@@ -167,7 +159,16 @@ const changeTime = (checkTimeElement, value) => {
  * @return {undefined} - функция ничего не возвращает
  */
 const setLocation = (buildingLocation) => {
-  locationField.value = `${buildingLocation.lat.toFixed(FIXED_VALUE)}, ${buildingLocation.lat.toFixed(FIXED_VALUE)}`;
+  locationField.value = `${buildingLocation.lat.toFixed(FIXED_VALUE)}, ${buildingLocation.lng.toFixed(FIXED_VALUE)}`;
+};
+
+/**
+ * Сбрасывает данные на всех формах
+ * @return {undefined} - функция ничего не возвращает
+ */
+const resetForms = () => {
+  formFilter.reset();
+  formAdd.reset();
 };
 
 const onGuestsChange = () => {
@@ -190,18 +191,27 @@ const onTimeOutChange = (evt) => {
   changeTime(timeOut, evt.target.value);
 };
 
-const initForm = (postData, getCurrentLocation) => {
-  const onDataSent = () => {
-    success('Данные успешно сохранены на сервере!');
+const initForm = (postData, getCurrentLocation, onUpdateData) => {
+  const resetData = () => {
     resetForms();
     setLocation(getCurrentLocation());
+  };
+
+  const onDataSent = () => {
+    success('Данные успешно сохранены на сервере!');
+    resetData();
   };
 
   const onAddFormSubmit = (evt) => {
     evt.preventDefault();
     const formData = new FormData(formAdd);
-    deactivateForms();
-    postData(onDataSent, formData, activateForms);
+    postData(onDataSent, formData, onUpdateData);
+  };
+
+  const onResetBtnClick = (evt) => {
+    evt.preventDefault();
+    resetData();
+    onUpdateData();
   };
 
   title.addEventListener('input', onInputCheck);
@@ -212,6 +222,7 @@ const initForm = (postData, getCurrentLocation) => {
   rooms.addEventListener('change', onGuestsChange);
   guests.addEventListener('change', onGuestsChange);
   formAdd.addEventListener('submit', onAddFormSubmit);
+  resetButton.addEventListener('click', onResetBtnClick);
 
   changeTime(timeOut, timeIn.value);
   changeGuests();

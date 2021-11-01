@@ -9,11 +9,31 @@ const addMessage = (template, messageClass, message) => {
   const block = template.cloneNode(true);
   const content = searchNode(block, messageClass);
 
+  const onEscKeydown = (evt) => {
+    if (evt.key === 'Escape') {
+      document.removeEventListener('keydown', onEscKeydown);
+      block.remove();
+    }
+  };
+
+  const removeEvent = () => {
+    document.removeEventListener('keydown', onEscKeydown);
+  };
+
+  const onBlockClick = () => {
+    removeEvent();
+    block.remove();
+  };
+
   content.textContent = message;
 
   document.body.append(block);
 
+  document.addEventListener('keydown', onEscKeydown);
+  block.addEventListener('click', onBlockClick);
+
   setTimeout(() => {
+    removeEvent();
     block.remove();
   }, NOTIFICATION_TIME);
 };
