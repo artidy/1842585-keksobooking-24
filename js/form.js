@@ -173,9 +173,9 @@ const setLocation = (buildingLocation) => locationField.value = `${buildingLocat
  */
 const resetForms = () => {
   resetPreviews();
-  changeType(type.value);
   formFilter.reset();
   formAdd.reset();
+  changeType(type.value);
 };
 
 const onGuestsChange = () => changeGuests();
