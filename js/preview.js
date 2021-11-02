@@ -63,7 +63,7 @@ const addPicture = (preview) => {
 const resetPreviews = () => {
   avatarPreview.src = PreviewSettings.DEFAULT_AVATAR;
   clearImages();
-  createContainer();
+  buildingContainer.append(createContainer());
 };
 
 const onAvatarChange = () => {
