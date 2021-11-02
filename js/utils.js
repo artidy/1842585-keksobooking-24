@@ -4,6 +4,12 @@
  * @type {array<string>}
  * */
 const CONTROL_SELECTORS = ['select', 'fieldset'];
+
+/**
+ * Пауза в миллисекундах до срабатывания переданной функции
+ * @constant
+ * @type {number}
+ * */
 const TIMEOUT_DEBOUNCE = 500;
 
 /**

@@ -1,5 +1,9 @@
 import {createPopup} from './popup.js';
 
+/**
+ * Начальные настройки карты
+ * @enum {number|string}
+ * */
 const MapSettings = {
   ID: 'map-canvas',
   ZOOM: 15,
@@ -16,6 +20,13 @@ const MapSettings = {
   POPUP_CLASS: '.popup',
 };
 
+/**
+ * Функция возвращает иконку маркера карты
+ * @param {string} iconUrl - ссылка на изображение
+ * @param {number} iconWidth - ширина изображения
+ * @param {number} iconHeight - высота изображения
+ * @return {object} - объект с настройками иконки
+ */
 const getIconSettings = (iconUrl, iconWidth, iconHeight) => ({
   iconUrl: iconUrl,
   iconSize: [iconWidth, iconHeight],
@@ -34,6 +45,11 @@ mainMarker.addTo(map);
 tileLayer.addTo(map);
 layerMarkerGroup.addTo(map);
 
+/**
+ * Функция добавления предложений на карту
+ * @param {array<object>} offers - массив предложений для вывода на карту
+ * @return {undefined} - функция ничего не возвращает
+ */
 const addOffersToMap = (offers) => {
   layerMarkerGroup.clearLayers();
 
@@ -44,8 +60,16 @@ const addOffersToMap = (offers) => {
   );
 };
 
+/**
+ * Функция получает координаты основной метки на карте
+ * @return {object} - координаты основной метки на карте
+ */
 const getCurrentLocation = () => mainMarker.getLatLng();
 
+/**
+ * Функция сброса положения карты и основной метки
+ * @return {undefined} - функция ничего не возвращает
+ */
 const resetMap = () => {
   map.setView(MapSettings.START_LOCATION, MapSettings.ZOOM);
   mainMarker.setLatLng(MapSettings.START_LOCATION);
@@ -53,6 +77,11 @@ const resetMap = () => {
 
 const onMarkerMoveEnd = (setLocation) => mainMarker.on('move', () => setLocation(getCurrentLocation()));
 
+/**
+ * Функция инициализации карты
+ * @param {function} onMapLoad - загрузка данных на карту
+ * @return {undefined} - функция ничего не возвращает
+ */
 const initMap = (onMapLoad) => () => {
   resetMap();
   onMapLoad();

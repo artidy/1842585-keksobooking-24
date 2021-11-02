@@ -12,30 +12,35 @@ const BUILDING_TYPES = {
   bungalow: 'Бунгало',
   hotel: 'Отель',
 };
+
 /**
  * Делитель 10 для получения остатка от числа
  * @constant
  * @type {number}
  * */
 const DEV_10 = 10;
+
 /**
  * Делитель 100 для получения остатка от числа
  * @constant
  * @type {number}
  * */
 const DEV_100 = 100;
+
 /**
  * Ограничение для определения единственного числа
  * @constant
  * @type {number}
  * */
 const RANGE_ONE = 1;
+
 /**
  * Ограничение для определения множественного числа
  * @constant
  * @type {number}
  * */
 const RANGE_TWO = 5;
+
 /**
  * Ограничение для определения множественного числа
  * @enum {number}
@@ -44,30 +49,35 @@ const RangeMany = {
   MIN: 11,
   MAX: 20,
 };
+
 /**
  * Индекс в массиве для единственного числа
  * @constant
  * @type {number}
  * */
 const ONE = 0;
+
 /**
  * Индекс в массиве для множественного числа
  * @constant
  * @type {number}
  * */
 const TWO = 1;
+
 /**
  * Индекс в массиве для множественного числа
  * @constant
  * @type {number}
  * */
 const MANY = 2;
+
 /**
  * Три варианта для выбора множественного и единственно числа по слову "комната"
  * @constant
  * @type {array<string>}
  * */
 const ROOMS_FORM = ['комната', 'комнаты', 'комнат'];
+
 /**
  * Три варианта для выбора множественного и единственно числа по слову "гость"
  * @constant
@@ -176,6 +186,7 @@ const fillPhotos = (container, photos) => {
 
   photos.forEach((link) => {
     const photoContainer = template.cloneNode();
+
     photoContainer.src = link;
     container.append(photoContainer);
   });
