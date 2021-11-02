@@ -8,6 +8,17 @@ const PriceRange = {
   LOW: 10000,
   MIDDLE: 50000,
 };
+
+/**
+ * Значения фильтра стоимости аренды жилья
+ * @enum {string}
+ * */
+const PriceType = {
+  LOW: 'low',
+  MIDDLE: 'middle',
+  HIGH: 'high',
+};
+
 /**
  * Ограничение количества предложений для вывода на карту
  * @enum {number}
@@ -16,6 +27,7 @@ const OffersCount = {
   MIN: 0,
   MAX: 10,
 };
+
 /**
  * Вес удобства, если оно совпало с фильтром
  * @constant
@@ -44,11 +56,11 @@ const filterHousing = ({type}) => type === housingType.value || housingType.valu
  */
 const filterPrice = ({price}) => {
   switch(housingPrice.value) {
-    case 'low':
+    case PriceType.LOW:
       return price < PriceRange.LOW;
-    case 'middle':
+    case PriceType.MIDDLE:
       return price >= PriceRange.LOW && price < PriceRange.MIDDLE;
-    case 'high':
+    case PriceType.HIGH:
       return price >= PriceRange.MIDDLE;
     default:
       return true;
@@ -110,10 +122,10 @@ const updateFilters = (offers, updateMap) => {
   updateMap(filteredOffers);
 };
 
-const onDebounce = debounce((offers, updateMap) => updateFilters(offers, updateMap));
+const onDebounceRenderMap = debounce((offers, updateMap) => updateFilters(offers, updateMap));
 
 const onFilterOffers = (offers, updateMap) => {
-  const onUpdateFilters = () => onDebounce(offers, updateMap);
+  const onUpdateFilters = () => onDebounceRenderMap(offers, updateMap);
 
   const onUpdateFeature = ({target}) => {
     if (target && target.classList.contains('map__feature')) {

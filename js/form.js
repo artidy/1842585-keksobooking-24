@@ -8,6 +8,7 @@ import {resetPreviews} from './preview.js';
  * @type {string}
  * */
 const DISABLE_CLASS = 'ad-form--disabled';
+
 /**
  * Минимальная стоимость аренды для типов помещений
  * @constant
@@ -20,18 +21,21 @@ const TYPE_MIN_PRICE = {
   house: 5000,
   palace: 10000,
 };
+
 /**
  * Имя класса для отключения формы
  * @constant
  * @type {number}
  * */
 const MIN_GUEST_LIMIT = 0;
+
 /**
  * Имя класса для отключения формы
  * @constant
  * @type {number}
  * */
 const MAX_ROOMS_LIMIT = 100;
+
 /**
  * Количество знаков после запятой
  * @constant
@@ -60,6 +64,7 @@ const resetButton = searchNode(formAdd, '[type="reset"]');
  */
 const changeType = (current) => {
   const minPrice = TYPE_MIN_PRICE[current];
+
   price.setAttribute('placeholder', minPrice);
   price.setAttribute('min', minPrice);
 };
@@ -71,6 +76,7 @@ const changeType = (current) => {
  */
 const checkInputValidity = (element) => {
   const validity = element.validity;
+
   if (validity.valueMissing) {
     element.setCustomValidity('Поле обязательно для заполнения');
   } else if (validity.tooShort) {
@@ -91,12 +97,14 @@ const checkInputValidity = (element) => {
 const changeGuests = () => {
   const roomsCount = +rooms.value;
   const count = +guests.value;
+
   if (roomsCount === MAX_ROOMS_LIMIT && count !== MIN_GUEST_LIMIT ||
     roomsCount !== MAX_ROOMS_LIMIT && (count === MIN_GUEST_LIMIT || count > roomsCount)) {
     guests.setCustomValidity('Неправильно выбрано возможное количество гостей');
   } else {
     guests.setCustomValidity('');
   }
+
   guests.reportValidity();
 };
 

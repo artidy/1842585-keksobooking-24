@@ -6,6 +6,7 @@ import {error} from './notification.js';
  * @type {string}
  * */
 const SERVER_URL = 'https://24.javascript.pages.academy/keksobooking';
+
 /**
  * Каталог для получения предложений с сервера
  * @constant
