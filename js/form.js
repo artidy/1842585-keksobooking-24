@@ -1,5 +1,6 @@
 import {success} from './notification.js';
 import {findChildren, searchNode} from './utils.js';
+import {resetPreviews} from './preview.js';
 
 /**
  * Имя класса для отключения формы
@@ -65,22 +66,22 @@ const changeType = (current) => {
 
 /**
  * Проверяет валидность введенных данных в поле input
- * @param {HTMLElement} inputElement - тип помещения
+ * @param {HTMLElement} element - тип помещения
  * @return {undefined} - Функция ничего не возвращает
  */
-const checkInputValidity = (inputElement) => {
-  const validity = inputElement.validity;
+const checkInputValidity = (element) => {
+  const validity = element.validity;
   if (validity.valueMissing) {
-    inputElement.setCustomValidity('Поле обязательно для заполнения');
+    element.setCustomValidity('Поле обязательно для заполнения');
   } else if (validity.tooShort) {
-    inputElement.setCustomValidity(`Минимум ${inputElement.getAttribute('minlength')}, сейчас ${inputElement.value.length}`);
+    element.setCustomValidity(`Минимум ${element.getAttribute('minlength')}, сейчас ${element.value.length}`);
   } else if (validity.tooLong) {
-    inputElement.setCustomValidity(`Максимум ${inputElement.getAttribute('maxlength')}, сейчас ${inputElement.value.length}`);
+    element.setCustomValidity(`Максимум ${element.getAttribute('maxlength')}, сейчас ${element.value.length}`);
   } else {
-    inputElement.setCustomValidity('');
+    element.setCustomValidity('');
   }
 
-  inputElement.reportValidity();
+  element.reportValidity();
 };
 
 /**
@@ -101,27 +102,27 @@ const changeGuests = () => {
 
 /**
  * Активирует форму и все подчиненные элементы
- * @param {HTMLElement} form - форма родитель
- * @param {array<HTMLElement>} formElements - массив подчиненных элементов
+ * @param {HTMLElement} element - форма родитель
+ * @param {array<HTMLElement>} children - массив подчиненных элементов
  * @return {undefined} - функция ничего не возвращает
  */
-const activateForm = (form, formElements) => {
-  form.classList.remove(DISABLE_CLASS);
-  formElements.forEach((formElement) => {
-    formElement.removeAttribute('disabled');
+const activateForm = (element, children) => {
+  element.classList.remove(DISABLE_CLASS);
+  children.forEach((child) => {
+    child.removeAttribute('disabled');
   });
 };
 
 /**
  * Отключает форму и все подчиненные элементы
- * @param {HTMLElement} form - форма родитель
- * @param {array<HTMLElement>} formElements - массив подчиненных элементов
+ * @param {HTMLElement} element - форма родитель
+ * @param {array<HTMLElement>} children - массив подчиненных элементов
  * @return {undefined} - функция ничего не возвращает
  */
-const deactivateForm = (form, formElements) => {
-  form.classList.add(DISABLE_CLASS);
-  formElements.forEach((formElement) => {
-    formElement.setAttribute('disabled', 'disabled');
+const deactivateForm = (element, children) => {
+  element.classList.add(DISABLE_CLASS);
+  children.forEach((child) => {
+    child.setAttribute('disabled', 'disabled');
   });
 };
 
@@ -149,48 +150,42 @@ const activateForms = () => {
  * @param {string} value - значение времени
  * @return {undefined} - функция ничего не возвращает
  */
-const changeTime = (checkTimeElement, value) => {
-  checkTimeElement.value = value;
-};
+const changeTime = (checkTimeElement, value) => checkTimeElement.value = value;
 
 /**
  * Устанавливает значение координат точки на карте
  * @param {object} buildingLocation - координаты выбранные на карте
  * @return {undefined} - функция ничего не возвращает
  */
-const setLocation = (buildingLocation) => {
-  locationField.value = `${buildingLocation.lat.toFixed(FIXED_VALUE)}, ${buildingLocation.lng.toFixed(FIXED_VALUE)}`;
-};
+const setLocation = (buildingLocation) => locationField.value = `${buildingLocation.lat.toFixed(FIXED_VALUE)}, ${buildingLocation.lng.toFixed(FIXED_VALUE)}`;
 
 /**
  * Сбрасывает данные на всех формах
  * @return {undefined} - функция ничего не возвращает
  */
 const resetForms = () => {
+  resetPreviews();
   formFilter.reset();
   formAdd.reset();
 };
 
-const onGuestsChange = () => {
-  changeGuests();
-};
+const onGuestsChange = () => changeGuests();
 
-const onInputCheck = (evt) => {
-  checkInputValidity(evt.target);
-};
+const onInputCheck = (evt) => checkInputValidity(evt.target);
 
-const onTypeChange = (evt) => {
-  changeType(evt.target.value);
-};
+const onTypeChange = (evt) => changeType(evt.target.value);
 
-const onTimeInChange = (evt) => {
-  changeTime(timeIn, evt.target.value);
-};
+const onTimeInChange = (evt) => changeTime(timeIn, evt.target.value);
 
-const onTimeOutChange = (evt) => {
-  changeTime(timeOut, evt.target.value);
-};
+const onTimeOutChange = (evt) => changeTime(timeOut, evt.target.value);
 
+/**
+ * Инициализирует начальные значения формы и активирует слушателей событий
+ * @param {function} postData - функция отправки данных на сервер
+ * @param {function} getCurrentLocation - функция получения текущих координат метки с карты
+ * @param {function} onUpdateData - функция для получения данных с сервера и обновления карты
+ * @return {undefined} - функция ничего не возвращает
+ */
 const initForm = (postData, getCurrentLocation, onUpdateData) => {
   const resetData = () => {
     resetForms();

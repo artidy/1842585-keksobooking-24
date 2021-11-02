@@ -1,10 +1,22 @@
 import {searchNode} from './utils.js';
 
+/**
+ * Пауза в миллисекундах до удаления уведомления
+ * @constant
+ * @type {number}
+ * */
 const NOTIFICATION_TIME = 5000;
 
 const successTemplate = searchNode(searchNode(document,'#success').content, '.success');
 const errorTemplate = searchNode(searchNode(document,'#error').content, '.error');
 
+/**
+ * Функция для создания нового уведомления для пользователя
+ * @param {Node} template - шаблон уведомления
+ * @param {string} messageClass - класс элемента для уведомления
+ * @param {string} message - текст уведомления
+ * @return {undefined} - функция ничего не возвращает
+ */
 const addMessage = (template, messageClass, message) => {
   const block = template.cloneNode(true);
   const content = searchNode(block, messageClass);
@@ -38,10 +50,20 @@ const addMessage = (template, messageClass, message) => {
   }, NOTIFICATION_TIME);
 };
 
+/**
+ * Функция для создания нового уведомления об успешном выполнении действия
+ * @param {string} message - текст уведомления
+ * @return {undefined} - функция ничего не возвращает
+ */
 const success = (message) => {
   addMessage(successTemplate, '.success__message', message);
 };
 
+/**
+ * Функция для создания нового уведомления об ошибке
+ * @param {string} message - текст уведомления
+ * @return {undefined} - функция ничего не возвращает
+ */
 const error = (message) => {
   addMessage(errorTemplate, '.error__message', message);
 };
