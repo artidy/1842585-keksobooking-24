@@ -1,4 +1,4 @@
-import {error} from './notification.js';
+import {sendError} from './notification.js';
 
 /**
  * Адрес сервера для отправки и получения данных
@@ -28,7 +28,7 @@ const getData = (onStartLoad, onSuccess, onUpdateMap, onResetMap) => () => {
     .then((response) => response.json())
     .then((data) => onSuccess(data, onUpdateMap))
     .then(onResetMap)
-    .catch(({message}) => error(message));
+    .catch(({message}) => sendError(message));
 };
 
 /**
@@ -52,7 +52,7 @@ const postData = (onSuccess, body, onUpdateData) => {
     })
     .then((data) => onSuccess(data))
     .then(onUpdateData)
-    .catch(({message}) => error(message));
+    .catch(({message}) => sendError(message));
 };
 
 export {getData, postData};

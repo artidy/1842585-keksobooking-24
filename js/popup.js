@@ -76,14 +76,14 @@ const MANY = 2;
  * @constant
  * @type {array<string>}
  * */
-const ROOMS_FORM = ['комната', 'комнаты', 'комнат'];
+const ROOM_FORMS = ['комната', 'комнаты', 'комнат'];
 
 /**
  * Три варианта для выбора множественного и единственно числа по слову "гость"
  * @constant
  * @type {array<string>}
  * */
-const GUESTS_FORM = ['гостя', 'гостей', 'гостей'];
+const GUEST_FORMS = ['гостя', 'гостей', 'гостей'];
 
 /**
  * Заполняет текстовое поле на форме
@@ -133,7 +133,7 @@ const getDescriptionForm = (forms, value) => {
  * @param {number} guests - количество гостей
  * @return {string} - текст в формате "5 комнат для 6 гостей"
  */
-const getCapacityDescription = (rooms, guests) => rooms && guests ? `${rooms} ${getDescriptionForm(ROOMS_FORM, rooms)} для ${guests} ${getDescriptionForm(GUESTS_FORM, guests)}` : '';
+const getCapacityDescription = (rooms, guests) => rooms && guests ? `${rooms} ${getDescriptionForm(ROOM_FORMS, rooms)} для ${guests} ${getDescriptionForm(GUEST_FORMS, guests)}` : '';
 
 /**
  * Формирует описание заезда и выезда

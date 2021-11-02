@@ -129,7 +129,7 @@ const onFilterOffers = (offers, updateMap) => {
 
   const onUpdateFeature = ({target}) => {
     if (target && target.classList.contains('map__feature')) {
-      onUpdateFilters()();
+      onUpdateFilters();
     }
   };
 

@@ -1,4 +1,4 @@
-import {success} from './notification.js';
+import {sendSuccess} from './notification.js';
 import {findChildren, searchNode} from './utils.js';
 import {resetPreviews} from './preview.js';
 
@@ -173,6 +173,7 @@ const setLocation = (buildingLocation) => locationField.value = `${buildingLocat
  */
 const resetForms = () => {
   resetPreviews();
+  changeType(type.value);
   formFilter.reset();
   formAdd.reset();
 };
@@ -201,7 +202,7 @@ const initForm = (postData, getCurrentLocation, onUpdateData) => {
   };
 
   const onDataSent = () => {
-    success('Данные успешно сохранены на сервере!');
+    sendSuccess('Данные успешно сохранены на сервере!');
     resetData();
   };
 

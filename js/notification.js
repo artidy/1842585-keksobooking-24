@@ -55,7 +55,7 @@ const addMessage = (template, messageClass, message) => {
  * @param {string} message - текст уведомления
  * @return {undefined} - функция ничего не возвращает
  */
-const success = (message) => {
+const sendSuccess = (message) => {
   addMessage(successTemplate, '.success__message', message);
 };
 
@@ -64,8 +64,8 @@ const success = (message) => {
  * @param {string} message - текст уведомления
  * @return {undefined} - функция ничего не возвращает
  */
-const error = (message) => {
+const sendError = (message) => {
   addMessage(errorTemplate, '.error__message', message);
 };
 
-export {success, error};
+export {sendSuccess, sendError};
