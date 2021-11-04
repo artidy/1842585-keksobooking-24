@@ -35,6 +35,9 @@ const OffersCount = {
  * */
 const FEATURE_WEIGHT = 1;
 
+const ROOMS_DEFAULT = 0;
+const GUESTS_DEFAULT = 0;
+
 const mapFilters = searchNode(document, '.map__filters');
 const housingType = searchNode(mapFilters, '#housing-type');
 const housingPrice = searchNode(mapFilters, '#housing-price');
@@ -72,39 +75,29 @@ const filterPrice = ({price}) => {
  * @param {number} rooms - количество комнат
  * @return {boolean} - результат проверки условия
  */
-const filterRooms = ({rooms}) => rooms >= +housingRooms.value || housingRooms.value === 'any';
+const filterRooms = ({rooms}) => rooms === (+housingRooms.value || ROOMS_DEFAULT) || housingRooms.value === 'any';
 
 /**
  * Функция проверяет соответствие предложения по количеству гостей
  * @param {number} guests - количество гостей
  * @return {boolean} - результат проверки условия
  */
-const filterGuests = ({guests}) => guests >= +housingGuests.value || housingGuests.value === 'any';
+const filterGuests = ({guests}) => guests === (+housingGuests.value || GUESTS_DEFAULT) || housingGuests.value === 'any';
 
 /**
  * Функция проверяет соответствие предложения по удобствам
  * @param {array|null} features - массив удобств в предложении
  * @return {any} - вес соответствия предложения
  */
-const getWeightFeatures = (features) => {
-  const weight = 0;
-
-  if (!features) {
-    return weight;
-  }
-
+const filterFeatures = ({ features }) => {
   const nodes = Array.from(featureContainer.querySelectorAll('[type="checkbox"]:checked'));
 
-  return nodes.reduce((value, node) => (features.includes(node.value) ? value + FEATURE_WEIGHT : value), weight);
-};
+  if (!features && nodes.length > 0) {
+    return false;
+  }
 
-/**
- * Функция сортирует предложения по удобствам
- * @param {array|null} firstFeatures - массив удобств в предложении
- * @param {array|null} secondFeatures - массив удобств в предложении
- * @return {number} - результат сортировки предложений
- */
-const sortFeature = ({features: firstFeatures}, {features: secondFeatures}) => getWeightFeatures(secondFeatures) - getWeightFeatures(firstFeatures);
+  return nodes.every((node) => features.includes(node.value));
+};
 
 /**
  * Функция проводит фильтр и сортировку предложений полученных с сервера и выводит максимальное значение предложений, установленных в константе OffersCount
@@ -115,8 +108,7 @@ const sortFeature = ({features: firstFeatures}, {features: secondFeatures}) => g
 const updateFilters = (offers, updateMap) => {
   const filteredOffers = offers
     .slice()
-    .filter(({offer}) => filterHousing(offer) && filterPrice(offer) && filterRooms(offer) && filterGuests(offer))
-    .sort(({offer: firstOffer}, {offer: secondOffer}) => sortFeature(firstOffer, secondOffer))
+    .filter(({offer}) => filterHousing(offer) && filterPrice(offer) && filterRooms(offer) && filterGuests(offer) && filterFeatures(offer))
     .slice(OffersCount.MIN, OffersCount.MAX);
 
   updateMap(filteredOffers);
