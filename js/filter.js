@@ -28,13 +28,6 @@ const OffersCount = {
   MAX: 10,
 };
 
-/**
- * Вес удобства, если оно совпало с фильтром
- * @constant
- * @type {number}
- * */
-const FEATURE_WEIGHT = 1;
-
 const ROOMS_DEFAULT = 0;
 const GUESTS_DEFAULT = 0;
 
