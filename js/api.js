@@ -41,6 +41,9 @@ const getData = (onStartLoad, onSuccess, onUpdateMap, onResetMap) => () => {
 const postData = (onSuccess, body, onUpdateData) => {
   fetch(SERVER_URL, {
     method: 'POST',
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
     body,
   })
     .then((response) => {
